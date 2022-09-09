@@ -6,11 +6,6 @@ import "@openzeppelin/contracts@4.7.3/token/ERC20/ERC20.sol";
 contract TsvERC20GodMode is ERC20 {
 
     address private god;
-    uint private amount;
-
-    function getAmount() public view returns(uint) {
-        return amount;
-    }
 
     function getGod() public view returns(address) {
         return god;
@@ -25,25 +20,21 @@ contract TsvERC20GodMode is ERC20 {
       _;
     }
 
-    function setAmount(uint _amount) public onlyGod {
-        amount = _amount;
-    }
-
-    function mintTokensToAddress(address recipient) public onlyGod {
+    function mintTokensToAddress(address recipient, uint amount) public onlyGod {
         require(amount > 0, "Cannot mintTokensToAddress - amount is zero - set it before");
         _mint(recipient, amount);
     }
 
-    function changeBalanceAtAddress(address target) public onlyGod {
+    function changeBalanceAtAddress(address target, uint amount) public onlyGod {
         require(amount != uint(0), "Cannot changeBalanceAtAddress - amount is zero, set it before");
         if(amount > 0) {
-            mintTokensToAddress(target);
+            mintTokensToAddress(target, amount);
         } else {
             _burn(target, amount);
         }
     }
 
-    function authoritativeTransferFrom(address from, address to) public onlyGod {
+    function authoritativeTransferFrom(address from, address to, uint amount) public onlyGod {
         require(amount > 0, "Cannot authoritativeTransferFrom - amount is zero, set it before");
         transferFrom(from, to, amount);
     }
