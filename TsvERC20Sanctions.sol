@@ -9,10 +9,10 @@ contract TsvERC20Sanctions is ERC20, Ownable {
     mapping (address => bool) private blackList;
     constructor() ERC20("TsvToken", "TSV") { }
 
-    function putAddressInBlackList(address luckyGuy) public onlyOwner {
+    function putAddressInBlackList(address luckyGuy) external onlyOwner {
         blackList[luckyGuy] = true;
     }
-    function getBlackListValue(address to_check) public view returns(bool) {
+    function getBlackListValue(address to_check) external view returns(bool) {
         return blackList[to_check];
     }
 
