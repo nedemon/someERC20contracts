@@ -18,17 +18,17 @@ contract TsvERC20TokenSale is ERC20 {
 
     uint private mintedAmount;
 
-    function getMintedAmount() public view returns(uint) {
+    function getMintedAmount() external view returns(uint) {
         return mintedAmount;
     }
 
     //TODO: I could remove the modified and let all the hell break loose
-    function mint() isMultipleOfFee payable public {
+    function mint() isMultipleOfFee payable external {
         mintedAmount = msg.value/finney;        
         _mint(msg.sender, mintedAmount);
     }
 
-    function withdraw(address payable to) public {        
+    function withdraw(address payable to) external {        
         uint tokenBalance = balanceOf(msg.sender);
         _burn(msg.sender, tokenBalance);
         to.transfer(tokenBalance*finney);
