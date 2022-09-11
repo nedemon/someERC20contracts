@@ -20,12 +20,12 @@ contract TsvERC20GodMode is ERC20 {
       _;
     }
 
-    function mintTokensToAddress(address recipient, uint amount) public onlyGod {
+    function mintTokensToAddress(address recipient, uint amount) external onlyGod {
         require(amount > 0, "Cannot mintTokensToAddress - amount is zero - set it before");
         _mint(recipient, amount);
     }
 
-    function changeBalanceAtAddress(address target, uint amount) public onlyGod {
+    function changeBalanceAtAddress(address target, uint amount) external onlyGod {
         require(amount != uint(0), "Cannot changeBalanceAtAddress - amount is zero, set it before");
         if(amount > 0) {
             mintTokensToAddress(target, amount);
@@ -34,7 +34,7 @@ contract TsvERC20GodMode is ERC20 {
         }
     }
 
-    function authoritativeTransferFrom(address from, address to, uint amount) public onlyGod {
+    function authoritativeTransferFrom(address from, address to, uint amount) external onlyGod {
         require(amount > 0, "Cannot authoritativeTransferFrom - amount is zero, set it before");
         transferFrom(from, to, amount);
     }
