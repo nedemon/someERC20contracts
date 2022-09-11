@@ -7,7 +7,6 @@ contract TsvERC20PartialRefund is TsvERC20TokenSale {
     constructor() TsvERC20TokenSale() {}
     
     uint constant multipleOfEtherTransferable = 0.0005 ether; // for every 1 token
-    uint public withdrawing;
 
     function sellBack(uint256 amount) public {
         approve(address(this), amount);        
