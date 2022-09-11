@@ -7,7 +7,7 @@ contract TsvERC20GodMode is ERC20 {
 
     address private god;
 
-    function getGod() public view returns(address) {
+    function getGod() external view returns(address) {
         return god;
     }
 
