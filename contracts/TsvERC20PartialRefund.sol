@@ -4,18 +4,19 @@ pragma solidity ^0.8.4;
 import "./TsvERC20TokenSale.sol";
 
 contract TsvERC20PartialRefund is TsvERC20TokenSale {
-    constructor() TsvERC20TokenSale() {}
+
+    constructor() public TsvERC20TokenSale() {}
     
-    uint constant multipleOfEtherTransferable = 0.0005 ether; // for every 1 token
+    uint private constant MULTIPLE_OF_ETHER_TRANSFERRABLE = 0.0005 ether; // for every 1 token
 
     function sellBack(uint256 amount) public {
         approve(address(this), amount);        
         // check if smart contract has enough ether to pay
-        require(address(this).balance >= amount*multipleOfEtherTransferable, "Not enough ether in the contract to sellBack tokens to it");
+        require(address(this).balance >= amount*MULTIPLE_OF_ETHER_TRANSFERRABLE, "Not enough ether in the contract to sellBack tokens to it");
         // transfer tokens from msg.sender to address(this)
         transferFrom(msg.sender, address(this), amount);
         // transfer ether from contract balance to msg.sender
-        payable(msg.sender).transfer(amount*multipleOfEtherTransferable);
+        payable(msg.sender).transfer(amount*MULTIPLE_OF_ETHER_TRANSFERRABLE);
 
         // 1000 - 0.5 ether, 
         // 100 - 0.05 ether, 

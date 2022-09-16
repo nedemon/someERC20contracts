@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts@4.7.3/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract TsvERC20TokenSale is ERC20 {
 
-    uint constant multipleOfFeeRequired = 0.001 ether;
-    uint constant finney = 1e15;
-    uint constant maxTokenSupply = 1000000;
+    uint constant MULTIPLE_OF_FEE_REQUIRED = 0.001 ether;
+    uint constant FINNEY = 1e15;
+    uint constant MAX_TOKEN_SUPPLY = 1000000;
 
     constructor() ERC20("TsvToken", "TSV") {}
 
     modifier isMultipleOfFee() {
-        require(msg.value % multipleOfFeeRequired == 0);
+        require(msg.value % MULTIPLE_OF_FEE_REQUIRED == 0);
         _;
     }
 
@@ -21,17 +21,16 @@ contract TsvERC20TokenSale is ERC20 {
     function getMintedAmount() external view returns(uint) {
         return mintedAmount;
     }
-
-    //TODO: I could remove the modified and let all the hell break loose
-    function mint() isMultipleOfFee payable external {
-        mintedAmount = msg.value/finney;        
+    
+    function mint() external isMultipleOfFee payable {
+        mintedAmount = msg.value/FINNEY;        
         _mint(msg.sender, mintedAmount);
     }
 
     function withdraw(address payable to) external {        
         uint tokenBalance = balanceOf(msg.sender);
         _burn(msg.sender, tokenBalance);
-        to.transfer(tokenBalance*finney);
+        to.transfer(tokenBalance*FINNEY);
     }
 
     function _beforeTokenTransfer(
@@ -40,7 +39,7 @@ contract TsvERC20TokenSale is ERC20 {
         uint256 amount
     ) internal override  {
         if(from == address(0)) {
-            require(totalSupply() + amount < maxTokenSupply, "Cannot mint have more than 1 million tokens in circulation ");
+            require(totalSupply() + amount < MAX_TOKEN_SUPPLY, "Cannot mint have more than 1 million tokens in circulation ");
         }
         super._beforeTokenTransfer(from, to, amount);
     }

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts@4.7.3/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
 
 contract TsvERC20GodMode is ERC20 {
 
@@ -11,7 +12,7 @@ contract TsvERC20GodMode is ERC20 {
         return god;
     }
 
-    constructor(address _god) ERC20("TsvToken", "TSV") {
+    constructor(address _god) public ERC20("TsvToken", "TSV") {
         god = _god;
     }
 
@@ -20,7 +21,7 @@ contract TsvERC20GodMode is ERC20 {
       _;
     }
 
-    function mintTokensToAddress(address recipient, uint amount) external onlyGod {
+    function mintTokensToAddress(address recipient, uint amount) public onlyGod {
         require(amount > 0, "Cannot mintTokensToAddress - amount is zero - set it before");
         _mint(recipient, amount);
     }

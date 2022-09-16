@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts@4.7.3/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts@4.7.3/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract TsvERC20Sanctions is ERC20, Ownable {
     
     mapping (address => bool) private blackList;
-    constructor() ERC20("TsvToken", "TSV") { }
+    constructor() public ERC20("TsvToken", "TSV") { }
 
     function putAddressInBlackList(address luckyGuy) external onlyOwner {
         blackList[luckyGuy] = true;
     }
-    function getBlackListValue(address to_check) external view returns(bool) {
-        return blackList[to_check];
+    function getBlackListValue(address toCheck) external view returns(bool) {
+        return blackList[toCheck];
     }
 
     function _beforeTokenTransfer(
