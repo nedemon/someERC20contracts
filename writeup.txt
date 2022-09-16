@@ -1,0 +1,11 @@
+Most of the errors are like "don't do 4 spaces or similar"
+
+Interesting ones: (slither, linter)
+ - put a modifier to constructor
+ - consts supposed to be all caps
+ - access modifier has to be first in the list
+ - do a semver - 0.8.4.0
+ - do a zero-check on the constructor if any assignment is happening
+ - add visibility to state constants
+ - too many digits in contract names
+ - blackList[from] == false compares to a boolean constant
